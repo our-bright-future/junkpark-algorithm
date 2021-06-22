@@ -1,21 +1,37 @@
 ```
-# 제목 : [백준] 1753_최단경로 (Python)
-# 태그 : boj, python, 그래프 이론, 다익스트라
+# 제목 : [백준] 15657_N과 M (8) (Python)
+# 태그 : boj, python, 백트래킹
 ```
 ## 🌏 문제 주소
 ___
-<https://www.acmicpc.net/problem/1000>
+<https://www.acmicpc.net/problem/15657>
 <br/><br/>
 
 ## 🤔 문제 접근 방법
 ___
-인풋을 int형으로 변환하여 A, B 각각의 변수에 저장한 뒤 합쳤다.
+방금 푼 [15652](https://www.acmicpc.net/problem/15652) 문제와 매우 비슷한 문제이다. `nums`를 입력받아 `sort`한 후, [15652](https://www.acmicpc.net/problem/15652)와 같이 풀어주면 된다. 간단하게 `depth`가 `M`이 되면 `join`해서 출력하고, `return` 될 때 가장 마지막 값을 `pop`해주면 된다.
 <br/><br/>
 
 ## 💡 코드 
 ___
 ```python
-print('Hello, World!!')
+N, M = map(int, input().split())
+nums = sorted(list(map(int, input().split())))
+
+def back_tracking(depth, ans=[]):
+    if depth == M:
+        print(' '.join(map(str, ans)))
+        return
+    else:
+        for num in nums:
+            if ans:
+                if num < ans[-1]:
+                    continue
+            ans.append(num)
+            back_tracking(depth+1, ans)
+            ans.pop()
+
+back_tracking(0)
 ```
 <br/><br/>
 
