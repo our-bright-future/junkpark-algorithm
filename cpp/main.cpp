@@ -23,32 +23,37 @@ void _union(int x, int y, vector<int> &parent) {
 }
 
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<int> parent(n + 1);
-    for (int i = 0; i < n; i++) {
-        parent[i] = i;
-    }
-    for (int x = 1; x <= n; x++) {
-        for (int y = 1; y <= n; y++) {
-            int tmp;
-            cin >> tmp;
-            if (tmp == 1) {
-                if (_find(x, parent) != _find(y, parent)) _union(x, y, parent);
-            }
+    int n;
+    cin >> n;
+
+    vector<int> nums(n);
+    for (auto &num : nums) cin >> num;
+
+    int sum = 0;
+    for (auto &num : nums) sum += num;
+    cout << (int)round((double)sum / n) << endl;
+
+    sort(nums.begin(), nums.end());
+    cout << nums[n / 2] << endl;
+
+    int mode;
+    int cnt = 0;
+    int is_second = 0;
+    map<int, int> m;
+    for (auto &num : nums) m[num] += 1;
+    for (auto &num : nums) {
+        if (cnt < m[num]) {
+            mode = num;
+            is_second = 0;
+            cnt = m[num];
+        } else if (cnt == m[num] && mode != num && !is_second) {
+            mode = num;
+            is_second = 1;
         }
     }
-    vector<int> routes(m);
-    for (auto &route : routes) {
-        cin >> route;
-    }
-    for (int i = 0; i < m - 1; i++) {
-        if (_find(routes[i], parent) != _find(routes[i + 1], parent)) {
-            cout << "NO" << endl;
-            return;
-        }
-    }
-    cout << "YES" << endl;
+    cout << mode << endl;
+
+    cout << nums[n - 1] - nums[0] << endl;
 }
 
 // clang-format off
